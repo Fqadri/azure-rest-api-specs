@@ -1,0 +1,23 @@
+{
+  "parameters": {
+    "subscriptionId": "subId",
+    "resourceGroupName": "rg0",
+    "regionName": "redmond",
+    "api-version": "2018-12-01"
+  },
+  "responses": {
+    "200": {
+      "body": [
+        {
+          "id": "/subscriptions/subId/resourceGroups/rg0/providers/Microsoft.SupportBridge.Admin/regions/redmond/logCollectionScheduleJobs/default",
+          "name": "default",
+          "location": "redmond",
+          "properties": {
+            "state": "Enabled",
+            "blobServiceSasUri": "https://myblob.example.com"
+          }
+        }
+      ]
+    }
+  }
+}

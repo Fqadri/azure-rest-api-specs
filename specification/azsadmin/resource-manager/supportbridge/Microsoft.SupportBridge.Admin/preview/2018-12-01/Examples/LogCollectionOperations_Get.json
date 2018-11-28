@@ -1,0 +1,18 @@
+{
+  "parameters": {
+    "subscriptionId": "subId",
+    "resourceGroupName": "rg0",
+    "regionName": "redmond",
+    "api-version": "2018-12-01",
+    "operationId": "cad9caa5-4634-49c7-8970-78183e70169e"
+  },
+  "responses": {
+    "202": {
+      "headers": {
+        "location": "https://management.azure.com/subscriptions/subId/resourceGroups/rg0/providers/Microsoft.SupportBridge.Admin/regions/redmond/903103ba-36d3-420b-8dca-898382fd2b47",
+        "retry-after": "60"
+      }
+    },
+    "200": {}
+  }
+}

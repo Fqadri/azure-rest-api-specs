@@ -1,0 +1,620 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "version": "2018-12-01",
+    "title": "Support Bridge Service",
+    "description": "Azure Stack Support Bridge Service Resource Provider REST API"
+  },
+  "host": "adminmanagement.local.azurestack.external",
+  "schemes": [ "https" ],
+  "consumes": [ "application/json" ],
+  "produces": [ "application/json" ],
+  "paths": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SupportBridge.Admin/regions/{regionName}/logCollectionHistory": {
+      "get": {
+        "tags": [ "LogCollectionHistory" ],
+        "summary": "Gets log collection history.",
+        "operationId": "LogCollectionHistory_List",
+        "parameters": [
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" },
+          { "$ref": "#/parameters/FilterParameter" },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "The (0-based) index of the job history list from which to begin requesting entries.",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "The number of job history to request, in the of range of [1..100].",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/LogCollectionHistoryListResult" }
+          }
+        },
+        "x-ms-odata": "#/definitions/LogCollectionHistoryListResult",
+        "x-ms-pageable": { "nextLinkName": "nextLink" },
+        "x-ms-examples": { "LogCollectionHistory_List": { "$ref": "./examples/LogCollectionHistory_List.json" } }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SupportBridge.Admin/regions/{regionName}/collectLogs": {
+      "post": {
+        "tags": [ "LogCollectionJobs" ],
+        "summary": "Starts a log collection job.",
+        "operationId": "LogCollectionJobs_CollectLogs",
+        "parameters": [
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          {
+            "name": "resource",
+            "in": "body",
+            "description": "The log collection parameters.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/LogCollectionJob" }
+          },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "headers": {
+              "Location": {
+                "description": "Location URI to query for operation status",
+                "type": "string"
+              },
+              "RetryAfter": {
+                "description": "Specifies retry interval in seconds",
+                "type": "number"
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": { "final-state-via": "location" },
+        "x-ms-examples": { "LogCollectionJobs_CollectLogs": { "$ref": "./examples/LogCollectionJobs_CollectLogs.json" } }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SupportBridge.Admin/regions/{regionName}/operations/{operationId}": {
+      "get": {
+        "tags": [ "LogCollectionOperations" ],
+        "summary": "Gets a log collection operation.",
+        "operationId": "LogCollectionOperations_Get",
+        "parameters": [
+          {
+            "name": "operationId",
+            "in": "path",
+            "description": "The operation id.",
+            "required": true,
+            "type": "string"
+          },
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "headers": {
+              "Location": {
+                "description": "Location URI to query for operation status",
+                "type": "string"
+              },
+              "RetryAfter": {
+                "description": "Specifies retry interval in seconds",
+                "type": "number"
+              }
+            }
+          },
+          "200": {
+            "description": "OK"
+          }
+        },
+        "x-ms-long-running-operation": true,
+        "x-ms-long-running-operation-options": { "final-state-via": "location" },
+        "x-ms-examples": { "LogCollectionOperations_Get": { "$ref": "./examples/LogCollectionOperations_Get.json" } }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SupportBridge.Admin/regions/{regionName}/logCollectionScheduleJobs/default": {
+      "get": {
+        "tags": [ "LogCollectionScheduleJobs" ],
+        "summary": "Gets a log collection schedule",
+        "operationId": "LogCollectionScheduleJobs_Get",
+        "parameters": [
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns resource in body",
+            "schema": { "$ref": "#/definitions/LogCollectionScheduleJobResource" }
+          }
+        },
+        "x-ms-examples": { "LogCollectionScheduleJobs_Get": { "$ref": "./examples/LogCollectionScheduleJobs_Get.json" } }
+      },
+      "put": {
+        "tags": [ "LogCollectionScheduleJobs" ],
+        "summary": "Creates or updates a log collection schedule.",
+        "operationId": "LogCollectionScheduleJobs_Create",
+        "parameters": [
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          {
+            "name": "resource",
+            "in": "body",
+            "description": "The log collection schedule job.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/LogCollectionScheduleJobResource" }
+          },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": { "$ref": "#/definitions/LogCollectionScheduleJobResource" }
+          },
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/LogCollectionScheduleJobResource" }
+          }
+        },
+        "x-ms-examples": { "LogCollectionScheduleJobs_Create": { "$ref": "./examples/LogCollectionScheduleJobs_Create.json" } }
+      },
+      "delete": {
+        "tags": [ "LogCollectionScheduleJobs" ],
+        "summary": "Deletes a log collection schedule.",
+        "operationId": "LogCollectionScheduleJobs_Delete",
+        "parameters": [
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "NoContent"
+          }
+        },
+        "x-ms-examples": { "LogCollectionScheduleJobs_Delete": { "$ref": "./examples/LogCollectionScheduleJobs_Delete.json" } }
+      },
+      "patch": {
+        "tags": [ "LogCollectionScheduleJobs" ],
+        "summary": "Toggles log collection schedule job state",
+        "description": "PATCH is only supported on 'State' property. Possible values are Enabled or Disabled\r\nIt does not support UPSERT semantics.",
+        "operationId": "LogCollectionScheduleJobs_Update",
+        "parameters": [
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          {
+            "name": "updateParameters",
+            "in": "body",
+            "description": "Parameters to patch for current schedule job.",
+            "required": true,
+            "schema": { "$ref": "#/definitions/LogCollectionScheduleJobPatchParameters" }
+          },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/LogCollectionScheduleJobResource" }
+          }
+        },
+        "x-ms-examples": { "LogCollectionScheduleJobs_Update": { "$ref": "./examples/LogCollectionScheduleJobs_Update.json" } }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SupportBridge.Admin/regions/{regionName}/logCollectionScheduleJobs": {
+      "get": {
+        "tags": [ "LogCollectionScheduleJobs" ],
+        "summary": "Gets all log collection schedules",
+        "operationId": "LogCollectionScheduleJobs_List",
+        "parameters": [
+          { "$ref": "#/parameters/ApiVersionParameter" },
+          { "$ref": "#/parameters/SubscriptionIdParameter" },
+          { "$ref": "#/parameters/ResourceGroupNameParameter" },
+          { "$ref": "#/parameters/RegionNameParameter" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/LogCollectionScheduleJobResource" }
+            }
+          }
+        },
+        "x-ms-examples": { "LogCollectionScheduleJobs_List": { "$ref": "./examples/LogCollectionScheduleJobs_List.json" } }
+      }
+    },
+    "/providers/Microsoft.SupportBridge.Admin/operations": {
+      "get": {
+        "tags": [ "Operations" ],
+        "summary": "Gets all operations.",
+        "operationId": "Operations_List",
+        "parameters": [ { "$ref": "#/parameters/ApiVersionParameter" } ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/OperationListResult" }
+          }
+        },
+        "x-ms-pageable": { "nextLinkName": "nextLink" },
+        "x-ms-examples": { "Operations_List": { "$ref": "./examples/Operations_List.json" } }
+      }
+    }
+  },
+  "definitions": {
+    "Resource": {
+      "description": "The ARM Resource model definition.",
+      "required": [ "location" ],
+      "properties": {
+        "id": {
+          "description": "Resource Id",
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "description": "Resource Name",
+          "type": "string",
+          "readOnly": true
+        },
+        "type": {
+          "description": "Resource Type",
+          "type": "string",
+          "readOnly": true
+        },
+        "location": {
+          "description": "Resource Location",
+          "type": "string",
+          "x-ms-mutability": [ "read", "create" ]
+        },
+        "tags": {
+          "description": "Resource Tags",
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "x-ms-azure-resource": true
+    },
+    "LogCollectionHistoryListResult": {
+      "description": "Represents log collection history.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Gets the list of resources for the current page.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/LogCollectionJobHistory" },
+          "readOnly": true
+        },
+        "nextLink": {
+          "description": "Gets the URL which can be queried to return the next page of results.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "LogCollectionJobHistory": {
+      "description": "Represents log collection job history.",
+      "type": "object",
+      "properties": {
+        "collectionType": {
+          "description": "Gets collection type",
+          "type": "string",
+          "readOnly": true
+        },
+        "status": {
+          "description": "Gets collection status",
+          "type": "string",
+          "readOnly": true
+        },
+        "collectionDetails": {
+          "$ref": "#/definitions/LogCollectionJobHistoryCollectionDetails",
+          "description": "Gets collection details",
+          "readOnly": true
+        },
+        "uploadDetails": {
+          "$ref": "#/definitions/LogCollectionJobHistoryUploadDetails",
+          "description": "Gets upload details",
+          "readOnly": true
+        }
+      }
+    },
+    "LogCollectionJobHistoryCollectionDetails": {
+      "description": "Represents log collection job history collection details.",
+      "type": "object",
+      "properties": {
+        "collectionFromDateTime": {
+          "format": "date-time",
+          "description": "Gets from date time in ISO 8601 format",
+          "type": "string",
+          "readOnly": true
+        },
+        "collectionToDateTime": {
+          "format": "date-time",
+          "description": "Gets to date time in ISO 8601 format",
+          "type": "string",
+          "readOnly": true
+        },
+        "rolesCollected": {
+          "description": "Gets roles collected",
+          "type": "array",
+          "items": { "type": "string" },
+          "readOnly": true
+        }
+      }
+    },
+    "LogCollectionJobHistoryUploadDetails": {
+      "description": "Represents log collection job history upload details.",
+      "type": "object",
+      "properties": {
+        "uploadDateTime": {
+          "format": "date-time",
+          "description": "Gets start date time in ISO 8601 format",
+          "type": "string",
+          "readOnly": true
+        },
+        "uploadSizeInMB": {
+          "format": "int32",
+          "description": "Gets upload size in MB",
+          "type": "integer",
+          "readOnly": true
+        },
+        "storageDetails": {
+          "$ref": "#/definitions/AzureStorage",
+          "description": "Gets Azure storage details",
+          "readOnly": true
+        }
+      }
+    },
+    "AzureStorage": {
+      "description": "Represents Azure Storage.",
+      "type": "object",
+      "properties": {
+        "blobServiceSasUri": {
+          "description": "Gets Blob Service SAS URL",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "LogCollectionJob": {
+      "description": "Represents log collection job configuration",
+      "required": [ "blobServiceSasUri", "logCollectionCustomParameters" ],
+      "type": "object",
+      "properties": {
+        "blobServiceSasUri": {
+          "description": "Gets or sets Blob Service SAS URL",
+          "type": "string"
+        },
+        "logCollectionCustomParameters": {
+          "$ref": "#/definitions/LogCollectionCustomParameters",
+          "description": "Gets or sets custom parameters"
+        }
+      }
+    },
+    "LogCollectionCustomParameters": {
+      "description": "Represents log collection custom parameters",
+      "required": [ "timeRange" ],
+      "type": "object",
+      "properties": {
+        "timeRange": {
+          "$ref": "#/definitions/TimeRange",
+          "description": "Gets or sets time range"
+        }
+      }
+    },
+    "TimeRange": {
+      "description": "Represents time range",
+      "required": [ "fromDateTime", "toDateTime" ],
+      "type": "object",
+      "properties": {
+        "fromDateTime": {
+          "format": "date-time",
+          "description": "Gets or sets start date time in ISO 8601 format",
+          "type": "string"
+        },
+        "toDateTime": {
+          "format": "date-time",
+          "description": "Gets or sets end date time in ISO 8601 format",
+          "type": "string"
+        }
+      }
+    },
+    "LogCollectionScheduleJob": {
+      "description": "Represents log collection schedule job configuration",
+      "required": [ "state", "blobServiceSasUri" ],
+      "type": "object",
+      "properties": {
+        "state": {
+          "description": "Gets or sets state",
+          "enum": [ "Enabled", "Disabled" ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "LogCollectionScheduleJobState",
+            "modelAsString": true
+          }
+        },
+        "blobServiceSasUri": {
+          "description": "Gets or sets Blob Service SAS URL",
+          "type": "string"
+        }
+      }
+    },
+    "LogCollectionScheduleJobResource": {
+      "description": "A specialization of the {Microsoft.AzureStack.Services.Fabric.Common.Resource.Models.ArmResource} class, where the type of the properties is known.",
+      "allOf": [ { "$ref": "#/definitions/Resource" } ],
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/LogCollectionScheduleJob",
+          "description": "Resource Properties",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "LogCollectionScheduleJobPatchParameters": {
+      "description": "Represents log collection schedule Patch Parameters",
+      "type": "object",
+      "properties": {
+        "tags": {
+          "description": "Gets or sets tags to update",
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "properties": {
+          "$ref": "#/definitions/LogCollectionScheduleJobPatchProperties",
+          "description": "Gets or sets log collection schedule job patch properties",
+          "x-ms-client-flatten": true
+        }
+      }
+    },
+    "LogCollectionScheduleJobPatchProperties": {
+      "description": "Represents log collection schedule Patch Properties",
+      "required": [ "state" ],
+      "type": "object",
+      "properties": {
+        "state": {
+          "description": "Gets or sets state to update",
+          "enum": [ "Enabled", "Disabled" ],
+          "type": "string",
+          "x-ms-enum": {
+            "name": "LogCollectionScheduleJobState",
+            "modelAsString": true
+          }
+        }
+      }
+    },
+    "OperationListResult": {
+      "description": "List of Operations.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "Gets array of operations.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/Operation" },
+          "readOnly": true
+        },
+        "nextLink": {
+          "description": "Gets the URI to the next page of operations.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Operation": {
+      "description": "Describes the supported REST operation.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Gets the name of the operation performed on the object.",
+          "type": "string",
+          "readOnly": true
+        },
+        "display": {
+          "$ref": "#/definitions/Display",
+          "description": "Gets the display information for this particular operation or action.",
+          "readOnly": true
+        }
+      }
+    },
+    "Display": {
+      "description": "Contains the display information for this particular operation / action.",
+      "type": "object",
+      "properties": {
+        "provider": {
+          "description": "Gets friendly version of the resource provider name.",
+          "type": "string",
+          "readOnly": true
+        },
+        "resource": {
+          "description": "Gets friendly version of the resource type related to this action or operation.",
+          "type": "string",
+          "readOnly": true
+        },
+        "operation": {
+          "description": "Gets friendly name for the operation.",
+          "type": "string",
+          "readOnly": true
+        },
+        "description": {
+          "description": "Gets friendly description for the operation.",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "parameters": {
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "description": "Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+      "required": true,
+      "type": "string"
+    },
+    "ResourceGroupNameParameter": {
+      "name": "resourceGroupName",
+      "in": "path",
+      "description": "The name of the resource group.",
+      "required": true,
+      "type": "string",
+      "maxLength": 90,
+      "minLength": 1,
+      "pattern": "^[-\\w\\._\\(\\)]+$",
+      "x-ms-parameter-location": "method"
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "Version of the API to be used with the client request.",
+      "required": true,
+      "type": "string"
+    },
+    "RegionNameParameter": {
+      "name": "regionName",
+      "in": "path",
+      "description": "The name of the log collection region.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "FilterParameter": {
+      "name": "$filter",
+      "in": "query",
+      "description": "The filter to apply on resource.",
+      "required": false,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    }
+  },
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "description": "Azure Active Directory OAuth2 Flow",
+      "flow": "implicit",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "scopes": { "user_impersonation": "Impersonate your user account" }
+    }
+  },
+  "security": [ { "azure_auth": [ "user_impersonation" ] } ]
+}

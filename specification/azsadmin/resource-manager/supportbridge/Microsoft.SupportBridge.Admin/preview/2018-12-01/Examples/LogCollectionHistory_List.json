@@ -1,0 +1,44 @@
+{
+  "parameters": {
+    "subscriptionId": "subId",
+    "resourceGroupName": "rg0",
+    "regionName": "redmond",
+    "api-version": "2018-12-01"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "collectionType": "Scheduled",
+            "status": "Successful",
+            "collectionDetails": {
+              "collectionFromDateTime": "2018-11-28T20:26:40.8452900Z",
+              "collectionToDateTime": "2018-11-28T20:26:40.8452900Z",
+              "rolesCollected": [ "All" ]
+            },
+            "uploadDetails": {
+              "uploadDateTime": "2018-11-28T20:26:40.8452900Z",
+              "uploadSizeInMB": 100,
+              "storageDetails": { "blobServiceSasUri": "https://myblob.example.com" }
+            }
+          },
+          {
+            "collectionType": "OnDemand",
+            "status": "Failed",
+            "collectionDetails": {
+              "collectionFromDateTime": "2018-11-28T20:26:40.8452900Z",
+              "collectionToDateTime": "2018-11-28T20:26:40.8452900Z",
+              "rolesCollected": [ "XRP, FRP" ]
+            },
+            "uploadDetails": {
+              "uploadDateTime": "2018-11-28T20:26:40.8452900Z",
+              "uploadSizeInMB": 1024,
+              "storageDetails": { "blobServiceSasUri": "https://myblob.example.com" }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
